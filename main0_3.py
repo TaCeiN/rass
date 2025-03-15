@@ -12,6 +12,7 @@ from PySide2.QtCore import Qt
 import rass
 from main_new import Ui_MainWindow
 from second_main_new import Ui_Form
+from ui_help import Ui_Help
 from splash_screen import Ui_SplashScreen
 
 
@@ -69,6 +70,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.email_button.clicked.connect(self.sending_email)
             self.ui.email_button_stop.clicked.connect(self.stop_sending)
             self.ui.settings_button.clicked.connect(self.open_settings_window)
+            self.ui.help_button.clicked.connect(self.open_help_window)
 
 
         except AttributeError as e:
@@ -162,6 +164,10 @@ class MainWindow(QtWidgets.QMainWindow):
     def open_settings_window(self):
         self.second_window = SettingsWidget()
         self.second_window.show()
+
+    def open_help_window(self):
+        self.help_window = HelpWidget()
+        self.help_window.show()
 
     def closeEvent(self,event):
         self.stop_sending()
@@ -288,6 +294,24 @@ class SettingsWidget(QtWidgets.QWidget):
             self.ui.mail_password_visible.setIcon(QIcon(self.main_window.hide_icon))
             self.ui.mail_password_edit.setEchoMode(QtWidgets.QLineEdit.Normal)
 
+class HelpWidget(QtWidgets.QWidget):
+
+    def __init__(self):
+        super(HelpWidget, self).__init__()
+        self.ui = Ui_Help()
+        self.ui.setupUi(self)
+        self.setWindowFlags(
+            Qt.Window |
+            Qt.WindowTitleHint |
+            Qt.WindowSystemMenuHint |
+            Qt.WindowCloseButtonHint
+        )
+
+        try:
+            pass
+        except AttributeError as e:
+            print(f"Ошибка: {e}")
+            sys.exit(-1)
 
 
 
