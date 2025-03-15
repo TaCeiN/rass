@@ -78,6 +78,10 @@ class MainWindow(QtWidgets.QMainWindow):
             sys.exit(-1)
 
         ##################### Иконки
+        help_icon = 'https://s.iimg.su/s/15/4XHvyt6191mJgEdvpJ03EX4N4nP7VJsnXYGHIiCc.png'
+        self.help_icon = QPixmap()
+        self.help_icon.loadFromData(requests.get(help_icon).content)
+        self.ui.help_button.setIcon(QIcon(self.help_icon))
 
         password_show = 'https://s.iimg.su/s/27/1n8duDoa9g59i49N0Xi1fCnSbFzeNodD8G80jQS3.png'
         self.show_icon = QPixmap()
@@ -86,6 +90,7 @@ class MainWindow(QtWidgets.QMainWindow):
         password_hide = 'https://s.iimg.su/s/27/UZLB1pKbwdWf4PYgBNUJSGVaQy5gJzZ7ePEJu2ts.png'
         self.hide_icon = QPixmap()
         self.hide_icon.loadFromData(requests.get(password_hide).content)
+
 
         ##################### Иконки
 
@@ -306,6 +311,11 @@ class HelpWidget(QtWidgets.QWidget):
             Qt.WindowSystemMenuHint |
             Qt.WindowCloseButtonHint
         )
+
+        help_image = 'https://s.iimg.su/s/15/wpB4u7gVH1m37LLFpgIhOZKPBqnw9VwkwiteRm2f.png'
+        self.help_image = QPixmap()
+        self.help_image.loadFromData(requests.get(help_image).content)
+        self.ui.label_8.setPixmap(self.help_image)
 
         try:
             pass
