@@ -13,7 +13,7 @@ import rass
 from main_new import Ui_MainWindow
 from second_main_new import Ui_Form
 from ui_help import Ui_Help
-from splash_screen import Ui_SplashScreen
+from splash_screen import Ui_Splash_Screen
 
 
 class SendingThread(QtCore.QThread):
@@ -185,7 +185,7 @@ class SplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
 
-        self.ui = Ui_SplashScreen()
+        self.ui = Ui_Splash_Screen()
         self.ui.setupUi(self)
 
         self.center_window()
