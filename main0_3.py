@@ -1,5 +1,5 @@
 # main0_3.py
-asdasdasd
+
 import sys,requests
 
 from PySide2.QtCore import QFileInfo
