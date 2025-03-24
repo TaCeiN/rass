@@ -20,46 +20,38 @@ def read_value_from_txt(txtname):
 
         for line in file:
             line = line.strip()
-            line = line.split('#')[0].strip()  # Убираем комментарии
+            line = line.split('#')[0].strip()
 
             if not line:
-                continue  # Пропускаем пустые строки
+                continue
 
-            # Проверяем, начинается ли строка с нового ключа
             if ':' in line:
                 if current_key is not None:
-                    # Сохраняем предыдущее значение
                     values[current_key] = ' '.join(current_value).strip().rstrip("'")  # Убираем лишнюю кавычку
 
-                # Извлекаем новый ключ и значение
                 key, value = line.split(":", 1)
                 current_key = key.strip()
-                current_value = [value.strip().strip("'")]  # Начинаем новую запись
+                current_value = [value.strip().strip("'")]
 
             else:
-                # Если строка не содержит ключа, добавляем к текущему значению
                 current_value.append(line.strip())
 
-        # Сохраняем последнее значение после завершения цикла
         if current_key is not None:
-            values[current_key] = ' '.join(current_value).strip().rstrip("'")  # Убираем лишнюю кавычку в конце
+            values[current_key] = ' '.join(current_value).strip().rstrip("'")
 
-        # Обработка значений
         for key, value in values.items():
-            # Проверяем, является ли значение числом
             if value.isdigit():
                 values[key] = int(value)
             else:
                 try:
                     values[key] = float(value)
                 except ValueError:
-                    pass  # Если не число, оставляем как есть
+                    pass
 
-            # Проверяем на наличие URL (или других специальных строк)
             if value.startswith("http://") or value.startswith("https://"):
-                pass  # Оставляем значение без изменений
+                pass
             elif "%aw_random%" in value:
-                pass  # Оставляем значение без изменений
+                pass
 
     return values
 
@@ -137,6 +129,8 @@ def send_email(i, email_number, filename_t):
     if 'gmail.com' in user:
         mail = 'smtp.gmail.com'
     if 'mail.ru' in user:
+        mail = 'smtp.mail.ru'
+    if 'bk.ru' in user:
         mail = 'smtp.mail.ru'
     # Основная часть и Заголовок
     msg = MIMEMultipart()

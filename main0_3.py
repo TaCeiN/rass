@@ -15,7 +15,6 @@ from second_main_new import Ui_Form
 from ui_help import Ui_Help
 from splash_screen import Ui_Splash_Screen
 
-
 class SendingThread(QtCore.QThread):
     sending_progressBar_update_signal = QtCore.Signal(int)
     update_label_signal = QtCore.Signal(str)
@@ -262,10 +261,15 @@ class SettingsWidget(QtWidgets.QWidget):
                 print(self.config_filename)
                 print(config)
                 self.ui.mail_adress_edit.setText(config['user'])
+                self.ui.mail_adress_edit.update()
                 self.ui.mail_password_edit.setText(config['app_password'])
+                self.ui.mail_password_edit.update()
                 self.ui.mail_topic_edit.setText(config['topic'])
+                self.ui.mail_topic_edit.update()
                 self.ui.mail_body_edit.setText(config['body'])
+                self.ui.mail_body_edit.repaint()
                 self.ui.mail_signature_edit.setText(config['signature'])
+                self.ui.mail_signature_edit.repaint()
 
     def save_config_file(self):
         body_text = self.ui.mail_body_edit.toPlainText()
@@ -298,6 +302,10 @@ class SettingsWidget(QtWidgets.QWidget):
         if mode == QtWidgets.QLineEdit.Password:
             self.ui.mail_password_visible.setIcon(QIcon(self.main_window.hide_icon))
             self.ui.mail_password_edit.setEchoMode(QtWidgets.QLineEdit.Normal)
+
+    def closeEvent(self, event):
+        self.deleteLater()
+        event.accept()
 
 class HelpWidget(QtWidgets.QWidget):
 

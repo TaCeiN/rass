@@ -269,14 +269,7 @@ class Ui_MainWindow(object):
         self.sending_progress_stat.setObjectName(u"sending_progress_stat")
         self.sending_progress_stat.setGeometry(QRect(83, 34, 229, 29))
         self.sending_progress_stat.setStyleSheet(u"background: linear-gradient(180.00deg, rgb(0, 0, 0),rgba(20, 19, 20, 0));\n"
-"-webkit-background-clip:\n"
-"text;\n"
-"-webkit-text-fill-color:\n"
-"transparent;\n"
-"background-clip:\n"
-"text;\n"
-"text-fill-color:\n"
-"transparent;\n"
+"background-clip: text;\n"
 "font-family: Inter;\n"
 "font-size: 24px;\n"
 "font-weight: 400;\n"
