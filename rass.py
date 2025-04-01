@@ -132,6 +132,8 @@ def send_email(i, email_number, filename_t):
         mail = 'smtp.mail.ru'
     if 'bk.ru' in user:
         mail = 'smtp.mail.ru'
+    if 'yandex.ru' in user:
+        mail = 'smtp.yandex.ru'
     # Основная часть и Заголовок
     msg = MIMEMultipart()
     msg['From'] = user
