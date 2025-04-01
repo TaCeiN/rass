@@ -3,6 +3,7 @@
 import os
 
 import smtplib
+import imaplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
@@ -128,12 +129,16 @@ def send_email(i, email_number, filename_t):
     sender_to,name_list,user,app_password,text,signature,topic,pixel = values_from_txt("config.txt")
     if 'gmail.com' in user:
         mail = 'smtp.gmail.com'
+        imamail = 'imap.gmail.com'
     if 'mail.ru' in user:
         mail = 'smtp.mail.ru'
+        imamail = 'imap.mail.ru'
     if 'bk.ru' in user:
         mail = 'smtp.mail.ru'
+        imamail = 'imap.mail.ru'
     if 'yandex.ru' in user:
         mail = 'smtp.yandex.ru'
+        imamail = 'imap.yandex.ru'
     # Основная часть и Заголовок
     msg = MIMEMultipart()
     msg['From'] = user
@@ -171,6 +176,10 @@ def send_email(i, email_number, filename_t):
         with smtplib.SMTP_SSL(f'{mail}', 465) as server:
             server.login(user, app_password)
             server.sendmail(user, i, msg.as_string())
+            imap_server = imaplib.IMAP4_SSL(imamail)
+            imap_server.login(user, app_password)
+            imap_server.append('Sent', '\\Seen', None, msg.as_bytes())
+            imap_server.logout()
         print('Письмо отправлено')
     except Exception as exception:
         print("Error: %s!\n\n" % exception)
