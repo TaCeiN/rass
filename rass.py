@@ -148,8 +148,8 @@ def send_email(i, email_number, filename_t):
         {signature}
     """
 
-    pixel_watch = """
-    <img src="https://script.google.com/macros/s/AKfycbyt8txkXh775E0sofXYbnzlq11PTkSa2Cfvy-To2XcHSB46Iv64T6Elvx8ob3wX8lYo/exec?user_id=5324" 
+    pixel_watch = f"""
+    <img src="https://script.google.com/macros/s/AKfycbyt8txkXh775E0sofXYbnzlq11PTkSa2Cfvy-To2XcHSB46Iv64T6Elvx8ob3wX8lYo/exec?user_id={i}" 
          alt="" 
          style="border: none; display: none;" />
 """

@@ -276,6 +276,7 @@ class Ui_MainWindow(object):
 "line-height: 29px;\n"
 "letter-spacing: 0px;\n"
 "text-align: center;")
+        self.sending_progress_stat.setAlignment(Qt.AlignCenter)
         self.help_button = QPushButton(self.frame)
         self.help_button.setObjectName(u"help_button")
         self.help_button.setGeometry(QRect(310, 382, 41, 41))

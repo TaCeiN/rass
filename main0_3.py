@@ -82,11 +82,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.help_icon.loadFromData(requests.get(help_icon).content)
         self.ui.help_button.setIcon(QIcon(self.help_icon))
 
-        password_show = 'https://s.iimg.su/s/27/1n8duDoa9g59i49N0Xi1fCnSbFzeNodD8G80jQS3.png'
+        password_show = 'https://s.iimg.su/s/01/PLY1EteI1XXlxpynVyufeGiR3zhayqsPMh6Jt2vt.png'
         self.show_icon = QPixmap()
         self.show_icon.loadFromData(requests.get(password_show).content)
 
-        password_hide = 'https://s.iimg.su/s/27/UZLB1pKbwdWf4PYgBNUJSGVaQy5gJzZ7ePEJu2ts.png'
+        password_hide = 'https://s.iimg.su/s/01/X7rg3SIOQBkNjRihaggByho20zhDpQXTQcpMV3nZ.png'
         self.hide_icon = QPixmap()
         self.hide_icon.loadFromData(requests.get(password_hide).content)
 
