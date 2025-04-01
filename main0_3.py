@@ -62,7 +62,7 @@ class MainWindow(QtWidgets.QMainWindow):
             Qt.WindowSystemMenuHint |
             Qt.WindowCloseButtonHint
         )
-
+        self.setWindowIcon(QIcon('dev/icons/icon.png'))
         try:
             self.ui.DB_button.clicked.connect(self.select_db_file)
             self.ui.File_button.clicked.connect(self.select_attach_file)
@@ -77,18 +77,13 @@ class MainWindow(QtWidgets.QMainWindow):
             sys.exit(-1)
 
         ##################### Иконки
-        help_icon = 'https://s.iimg.su/s/15/4XHvyt6191mJgEdvpJ03EX4N4nP7VJsnXYGHIiCc.png'
-        self.help_icon = QPixmap()
-        self.help_icon.loadFromData(requests.get(help_icon).content)
-        self.ui.help_button.setIcon(QIcon(self.help_icon))
+        self.ui.help_button.setIcon(QIcon('dev/icons/help.png'))
 
-        password_show = 'https://s.iimg.su/s/01/PLY1EteI1XXlxpynVyufeGiR3zhayqsPMh6Jt2vt.png'
+        password_show = 'dev/show.png'
         self.show_icon = QPixmap()
-        self.show_icon.loadFromData(requests.get(password_show).content)
 
-        password_hide = 'https://s.iimg.su/s/01/X7rg3SIOQBkNjRihaggByho20zhDpQXTQcpMV3nZ.png'
+        password_hide = 'dev/eye.png'
         self.hide_icon = QPixmap()
-        self.hide_icon.loadFromData(requests.get(password_hide).content)
 
 
         ##################### Иконки
@@ -183,7 +178,6 @@ class MainWindow(QtWidgets.QMainWindow):
 class SplashScreen(QSplashScreen):
     def __init__(self):
         super().__init__()
-
         self.ui = Ui_Splash_Screen()
         self.ui.setupUi(self)
 
@@ -223,8 +217,9 @@ class SettingsWidget(QtWidgets.QWidget):
         )
         # self.ui.mail_body_edit.textChanged.connect(self.body_text_changed)
         # self.ui.mail_signature_edit.textChanged.connect(self.signature_text_changed)
-        self.ui.mail_password_visible.setIcon(QIcon(self.main_window.show_icon))
+        self.ui.mail_password_visible.setIcon(QIcon('dev/icons/show.png'))
         self.ui.mail_password_edit.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.setWindowIcon(QIcon('dev/icons/icon.ico'))
 
         try:
             self.ui.open_config_button.clicked.connect(self.open_config_file)
@@ -297,10 +292,10 @@ class SettingsWidget(QtWidgets.QWidget):
     def password_visible(self):
         mode = self.ui.mail_password_edit.echoMode()
         if mode == QtWidgets.QLineEdit.Normal:
-            self.ui.mail_password_visible.setIcon(QIcon(self.main_window.show_icon))
+            self.ui.mail_password_visible.setIcon(QIcon('dev/icons/show.png'))
             self.ui.mail_password_edit.setEchoMode(QtWidgets.QLineEdit.Password)
         if mode == QtWidgets.QLineEdit.Password:
-            self.ui.mail_password_visible.setIcon(QIcon(self.main_window.hide_icon))
+            self.ui.mail_password_visible.setIcon(QIcon('dev/icons/eye.png'))
             self.ui.mail_password_edit.setEchoMode(QtWidgets.QLineEdit.Normal)
 
     def closeEvent(self, event):
@@ -324,6 +319,7 @@ class HelpWidget(QtWidgets.QWidget):
         self.help_image = QPixmap()
         self.help_image.loadFromData(requests.get(help_image).content)
         self.ui.label_8.setPixmap(self.help_image)
+        self.setWindowIcon(QIcon('dev/icons/icon.ico'))
 
         try:
             pass

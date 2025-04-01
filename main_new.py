@@ -20,6 +20,9 @@ class Ui_MainWindow(object):
         MainWindow.resize(377, 447)
         MainWindow.setMinimumSize(QSize(377, 447))
         MainWindow.setMaximumSize(QSize(377, 447))
+        icon = QIcon()
+        icon.addFile(u"../../../Downloads/wired-gradient-177-envelope-send-hover-flying.ico", QSize(), QIcon.Normal, QIcon.Off)
+        MainWindow.setWindowIcon(icon)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.frame = QFrame(self.centralwidget)
@@ -314,9 +317,9 @@ class Ui_MainWindow(object):
 "    min-width: 100px; /* \u041c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u0430\u044f \u0448\u0438\u0440\u0438\u043d\u0430 */\n"
 "    min-height: 40px; /* \u041c\u0438\u043d\u0438\u043c\u0430\u043b\u044c\u043d\u0430\u044f \u0432\u044b\u0441\u043e\u0442\u0430 */\n"
 "}")
-        icon = QIcon()
-        icon.addFile(u"../../../Downloads/free-icon-question-3106703.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.help_button.setIcon(icon)
+        icon1 = QIcon()
+        icon1.addFile(u"../../../Downloads/free-icon-question-3106703.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.help_button.setIcon(icon1)
         self.label = QLabel(self.frame)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(20, 400, 61, 31))
@@ -338,7 +341,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"LetterLy", None))
         self.DB_button.setText(QCoreApplication.translate("MainWindow", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u0444\u0430\u0439\u043b \u0411\u0414", None))
         self.email_button_stop.setText(QCoreApplication.translate("MainWindow", u"\u041f\u0440\u0435\u0440\u0432\u0430\u0442\u044c \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0443", None))
         self.email_button.setText(QCoreApplication.translate("MainWindow", u"\u041d\u0430\u0447\u0430\u0442\u044c \u043e\u0442\u043f\u0440\u0430\u0432\u043a\u0443", None))

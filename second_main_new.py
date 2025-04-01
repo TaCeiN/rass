@@ -20,6 +20,9 @@ class Ui_Form(object):
         Form.resize(554, 548)
         Form.setMinimumSize(QSize(554, 548))
         Form.setMaximumSize(QSize(554, 548))
+        icon = QIcon()
+        icon.addFile(u"../../../Downloads/wired-gradient-177-envelope-send-hover-flying.ico", QSize(), QIcon.Normal, QIcon.Off)
+        Form.setWindowIcon(icon)
         Form.setStyleSheet(u"background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(162, 139, 233), stop:1 rgb(120, 145, 221));")
         self.mail_adress = QLabel(Form)
         self.mail_adress.setObjectName(u"mail_adress")
@@ -274,9 +277,9 @@ class Ui_Form(object):
 "border-radius: 7px;\n"
 "    background: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgb(229, 236, 242), stop:1 rgb(212, 233, 252));\n"
 "}")
-        icon = QIcon()
-        icon.addFile(u"../../../Downloads/show.png", QSize(), QIcon.Normal, QIcon.Off)
-        self.mail_password_visible.setIcon(icon)
+        icon1 = QIcon()
+        icon1.addFile(u"../../../Downloads/show.png", QSize(), QIcon.Normal, QIcon.Off)
+        self.mail_password_visible.setIcon(icon1)
 
         self.retranslateUi(Form)
 
@@ -284,7 +287,7 @@ class Ui_Form(object):
     # setupUi
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"LetterLy", None))
         self.mail_adress.setText(QCoreApplication.translate("Form", u"\u0410\u0434\u0440\u0435\u0441 \u043f\u043e\u0447\u0442\u044b", None))
         self.mail_password.setText(QCoreApplication.translate("Form", u"\u041f\u0430\u0440\u043e\u043b\u044c \u043f\u043e\u0447\u0442\u044b", None))
         self.mail_topic.setText(QCoreApplication.translate("Form", u"\u0422\u0435\u043c\u0430 \u043f\u0438\u0441\u044c\u043c\u0430", None))
