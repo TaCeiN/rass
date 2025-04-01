@@ -1,0 +1,12 @@
+
+        user:'nikolay.krutykh@yandex.ru'
+        app_password:'jowazazizvzxhsba'
+        topic:'Ремонт и обслуживание холодильного оборудования'
+        body:'<p>Добрый день</p>'
+        signature:'<p>С уважением,<br>
+ИП Крутых С.В. (ИНН 616100712100) Компания "Содружество" г. Ростов-на-Дону<br>
+тел. (863) 247-03-60, 248-70-07<br>
++7-958-544-39-59 WhatsApp<br>
++7-958-544-24-97</p>' 
+        pixel:'https://script.google.com/macros/s/AKfycbxoHIK3B9BH4ECjRHdDJDvQljbrh10-tzRtVEwf1jvz54Y5WgJiM8OMqrnX1gMaAlge/exec?user_id=5324'
+        
