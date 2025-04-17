@@ -178,8 +178,16 @@ def send_email(i, email_number, filename_t):
             server.sendmail(user, i, msg.as_string())
             imap_server = imaplib.IMAP4_SSL(imamail)
             imap_server.login(user, app_password)
-            imap_server.append('Sent', '\\Seen', None, msg.as_bytes())
-            imap_server.logout()
+            # imap_server.append('Sent', '\\Seen', None, msg.as_bytes())
+            status, folders = imap_server.list()
+            for folder in folders:
+                decoded = folder.decode()
+                if '\\Sent' in decoded:
+                    sent_folder = decoded.split(' "/" ')[-1].strip('"')
+                    break
+            # imap_server.logout()
+        imap_server.append(sent_folder, '\\Seen', None, msg.as_bytes())
+
         print('Письмо отправлено')
     except Exception as exception:
         print("Error: %s!\n\n" % exception)
