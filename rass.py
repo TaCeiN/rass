@@ -127,6 +127,9 @@ def attach_file_save(filenames):
 def send_email(i, email_number, filename_t):
     global file_count
     sender_to,name_list,user,app_password,text,signature,topic,pixel = values_from_txt("config.txt")
+    if name_list[email_number] is None:
+        name_list[email_number] = " "
+
     if 'gmail.com' in user:
         mail = 'smtp.gmail.com'
         imamail = 'imap.gmail.com'
@@ -186,7 +189,10 @@ def send_email(i, email_number, filename_t):
                     sent_folder = decoded.split(' "/" ')[-1].strip('"')
                     break
             # imap_server.logout()
-        imap_server.append(sent_folder, '\\Seen', None, msg.as_bytes())
+            if 'mail.ru' in user:
+                imap_server.append(sent_folder, [], None, msg.as_bytes())
+            else:
+                imap_server.append("Sent", [], None, msg.as_bytes())
 
         print('Письмо отправлено')
     except Exception as exception:
