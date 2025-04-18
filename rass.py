@@ -190,9 +190,9 @@ def send_email(i, email_number, filename_t):
                     break
             # imap_server.logout()
             if 'mail.ru' in user:
-                imap_server.append(sent_folder, [], None, msg.as_bytes())
-            else:
                 imap_server.append("Sent", [], None, msg.as_bytes())
+            else:
+                imap_server.append(sent_folder, [], None, msg.as_bytes())
 
         print('Письмо отправлено')
     except Exception as exception:
