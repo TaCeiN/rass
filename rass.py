@@ -124,91 +124,107 @@ def attach_file_save(filenames):
     return filename_t
 
 
-def send_email(i, email_number, filename_t):
+def sendd(update_progress, filename_t, thread):
     global file_count
-    sender_to,name_list,user,app_password,text,signature,topic,pixel = values_from_txt("config.txt")
-    if name_list[email_number] is None:
-        name_list[email_number] = " "
 
-    if 'gmail.com' in user:
-        mail = 'smtp.gmail.com'
-        imamail = 'imap.gmail.com'
-    if 'mail.ru' in user:
-        mail = 'smtp.mail.ru'
-        imamail = 'imap.mail.ru'
-    if 'bk.ru' in user:
-        mail = 'smtp.mail.ru'
-        imamail = 'imap.mail.ru'
-    if 'yandex.ru' in user:
-        mail = 'smtp.yandex.ru'
-        imamail = 'imap.yandex.ru'
-    # Основная часть и Заголовок
-    msg = MIMEMultipart()
-    msg['From'] = user
-    msg['To'] = i
-    msg['Subject'] = f'{topic}'
-    # Тело Письма
-    body = f"""
-    {text.replace('{name_list}', name_list[email_number])}
-    """
+    sender_to, name_list, user, app_password, text, signature, topic, pixel = values_from_txt("config.txt")
 
-    # Подпись в письме
+    # Настройка SMTP и IMAP
+    domain = user.split('@')[-1]
+    smtp_imap_map = {
+        'gmail.com': ('smtp.gmail.com', 'imap.gmail.com'),
+        'mail.ru':   ('smtp.mail.ru', 'imap.mail.ru'),
+        'bk.ru':     ('smtp.mail.ru', 'imap.mail.ru'),
+        'yandex.ru': ('smtp.yandex.ru', 'imap.yandex.ru')
+    }
+    mail, imamail = smtp_imap_map.get(domain, (None, None))
 
-    signatur = f"""
-        {signature}
-    """
+    if not mail or not imamail:
+        print(f"Неизвестный домен: {domain}")
+        return
 
-    pixel_watch = f"""
-    <img src="https://script.google.com/macros/s/AKfycbyt8txkXh775E0sofXYbnzlq11PTkSa2Cfvy-To2XcHSB46Iv64T6Elvx8ob3wX8lYo/exec?user_id={i}" 
-         alt="" 
-         style="border: none; display: none;" />
-"""
-    for attach in filename_t:
-        # Прикрепление файла к письму
-        with open(attach, 'rb') as attachment:
-            part = MIMEApplication(attachment.read(), Name=os.path.basename(attach))
-            part['Content-Disposition'] = f'attachment; filename="{Header(os.path.basename(attach), "utf-8").encode()}"'
-            msg.attach(part)
-    # Приклепление Тела и Подписи
-    msg.attach(MIMEText(body, 'html', 'utf-8'))
-    msg.attach(MIMEText(signatur, 'html', 'utf-8'))
-    msg.attach(MIMEText(pixel_watch, 'html', 'utf-8'))
-
-    # Попытка отправить письмо с обработкой исключений
     try:
-        with smtplib.SMTP_SSL(f'{mail}', 465) as server:
-            server.login(user, app_password)
-            server.sendmail(user, i, msg.as_string())
-            imap_server = imaplib.IMAP4_SSL(imamail)
-            imap_server.login(user, app_password)
-            # imap_server.append('Sent', '\\Seen', None, msg.as_bytes())
-            status, folders = imap_server.list()
-            for folder in folders:
-                decoded = folder.decode()
-                if '\\Sent' in decoded:
-                    sent_folder = decoded.split(' "/" ')[-1].strip('"')
-                    break
-            # imap_server.logout()
-            if 'mail.ru' in user:
-                imap_server.append("Sent", [], None, msg.as_bytes())
-            else:
-                imap_server.append(sent_folder, [], None, msg.as_bytes())
+        smtp_server = smtplib.SMTP_SSL(mail, 465)
+        smtp_server.login(user, app_password)
 
-        print('Письмо отправлено')
-    except Exception as exception:
-        print("Error: %s!\n\n" % exception)
+        imap_server = imaplib.IMAP4_SSL(imamail)
+        imap_server.login(user, app_password)
 
+        status, folders = imap_server.list()
+        sent_folder = "Sent"
+        for folder in folders:
+            decoded = folder.decode()
+            if '\\Sent' in decoded:
+                sent_folder = decoded.split(' "/" ')[-1].strip('"')
+                break
 
+        email_itera = int(100 / len(sender_to))
+        email_number = 0
+        email_maximum = len(sender_to)
+        maximum = email_itera * email_maximum
 
-def sendd(update_progress,filename_t, thread):
-    email_itera = int(100/len(sender_to))
-    email_number = 0
-    email_maximum = len(sender_to)
-    maximum = len(sender_to)*email_itera
-    for i, name in zip(sender_to, name_list):
-        if not thread.is_running:
-            return
-        send_email(i,email_number, filename_t)
-        email_number+=1
-        email_progress_value = email_itera*email_number
-        update_progress(email_progress_value,maximum,email_maximum,email_number)
+        for i, name in zip(sender_to, name_list):
+            if not thread.is_running:
+                break
+
+            name = name if name else " "
+
+            # --- Формирование письма ---
+            msg = MIMEMultipart()
+            msg['From'] = user
+            msg['To'] = i
+            msg['Subject'] = topic
+
+            body = text.replace('{name_list}', name)
+            pixel_watch = f"""
+                <img src="https://script.google.com/macros/s/AKfycbyt8txkXh775E0sofXYbnzlq11PTkSa2Cfvy-To2XcHSB46Iv64T6Elvx8ob3wX8lYo/exec?user_id={i}" 
+                     alt="" 
+                     style="border: none; display: none;" />
+            """
+
+            msg.attach(MIMEText(body, 'html', 'utf-8'))
+            msg.attach(MIMEText(signature, 'html', 'utf-8'))
+            msg.attach(MIMEText(pixel_watch, 'html', 'utf-8'))
+
+            # Вложения
+            for attach in filename_t:
+                with open(attach, 'rb') as f:
+                    part = MIMEApplication(f.read(), Name=os.path.basename(attach))
+                    part['Content-Disposition'] = f'attachment; filename="{Header(os.path.basename(attach), "utf-8").encode()}"'
+                    msg.attach(part)
+
+            # Отправка
+            try:
+                smtp_server.sendmail(user, i, msg.as_string())
+
+                # Найти имя папки с тегом \Sent
+                status, folders = imap_server.list()
+                sent_folder = None
+                for folder in folders:
+                    decoded = folder.decode()
+                    if '\\Sent' in decoded:
+                        sent_folder = decoded.split(' "/" ')[-1].strip('"')
+                        break
+
+                # Безопасное добавление письма в отправленные
+                if sent_folder:
+                    if 'gmail.com' in user:
+                        pass
+                    else:
+                        imap_server.append(sent_folder, [], None, msg.as_bytes())
+                else:
+                    print("Не удалось найти папку Sent — письмо не добавлено в отправленные")
+                print(f"Письмо отправлено: {i}")
+            except Exception as e:
+                print(f"Ошибка при отправке на {i}: {e} {sent_folder}")
+
+            email_number += 1
+            email_progress_value = email_itera * email_number
+            update_progress(email_progress_value, maximum, email_maximum, email_number)
+
+        smtp_server.quit()
+        imap_server.logout()
+
+    except Exception as e:
+        print(f"Ошибка подключения: {e}")
+
